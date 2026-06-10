@@ -1,0 +1,229 @@
+/* =========================
+   Global Reset
+   ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================
+   Typography
+   ========================= */
+body {
+  background-color: #fdfbf7;
+  font-family: "Lato", sans-serif;
+  color: #1e293b;
+}
+
+h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  color: #0f172a;
+}
+
+h3 {
+  font-family: "Lato", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+}
+
+li {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #334155;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul,
+ol {
+  margin-left: 20px;
+}
+
+/* =========================
+   Layout Containers
+   ========================= */
+.container {
+  min-height: 100vh;
+}
+
+.content {
+  width: 100%;
+  max-width: 1280px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding: 24px 32px;
+}
+
+/* =========================
+   Navigation Bar
+   ========================= */
+.navContainer {
+  background: #0f172a;
+  border-bottom: 1px solid #1e293b;
+}
+
+nav {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.leftNav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#companyName {
+  font-size: 1.7rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.rightNav ul {
+  display: flex;
+  gap: 30px;
+  list-style-type: none;
+}
+
+.rightNav a {
+  color: #cbd5e1;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.rightNav a:hover {
+  color: #38bdf8;
+}
+
+/* =========================
+   Hero Section
+   ========================= */
+.hero {
+  background-color: #0f172a;
+  padding: 80px 24px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  color: #f8fafc;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+}
+
+/* =========================
+   Recipe Cards
+   ========================= */
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
+  transition: box-shadow 0.2s ease;
+}
+
+.item:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.right {
+  flex: 1;
+  height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.right img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.item .right img:hover {
+  transform: scale(1.05);
+}
+
+/* =========================
+   Footer
+   ========================= */
+footer {
+  width: 100%;
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+}
+
+.footerBox {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.footerBox p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* =========================
+   Responsive Design
+   ========================= */
+@media (max-width: 768px) {
+  .item,
+  nav,
+  .rightNav ul {
+    flex-direction: column;
+  }
+
+  .item {
+    padding: 20px;
+  }
+
+  nav {
+    gap: 30px;
+  }
+
+  nav ul {
+    text-align: center;
+  }
+
+  .left,
+  .right {
+    flex: 0 1 auto;
+    width: 100%;
+  }
+}
