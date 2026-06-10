@@ -1,4 +1,41 @@
 /* =========================
+   CSS Variables (Theming)
+   ========================= */
+:root {
+  /* Light Theme Colors (Default) */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-header-footer: #e2e8f0; /* Soft gray to fix the "sandwich effect" */
+  
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --accent: #38bdf8;
+  
+  --border-color: #cbd5e1;
+  --shadow-base: rgba(0, 0, 0, 0.05);
+  --shadow-hover: rgba(0, 0, 0, 0.12);
+  --overlay-bg: rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Theme Colors */
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --bg-header-footer: #020617; /* Very dark slate for header/footer */
+    
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent: #38bdf8;
+    
+    --border-color: #334155;
+    --shadow-base: rgba(0, 0, 0, 0.3);
+    --shadow-hover: rgba(0, 0, 0, 0.5);
+    --overlay-bg: rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* =========================
    Global Reset
    ========================= */
 * {
@@ -11,15 +48,17 @@
    Typography
    ========================= */
 body {
-  background-color: #fdfbf7;
   font-family: "Lato", sans-serif;
-  color: #1e293b;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  /* Adds a smooth fade when switching between light and dark mode */
+  transition: background-color 0.3s ease, color 0.3s ease; 
 }
 
 h2 {
   font-family: "Playfair Display", serif;
   font-size: 1.8rem;
-  color: #0f172a;
+  color: var(--text-main);
 }
 
 h3 {
@@ -28,13 +67,13 @@ h3 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 li {
   font-size: 0.95rem;
   line-height: 1.7;
-  color: #334155;
+  color: var(--text-main);
 }
 
 a {
@@ -49,10 +88,6 @@ ol {
 /* =========================
    Layout Containers
    ========================= */
-.container {
-  min-height: 100vh;
-}
-
 .content {
   width: 100%;
   max-width: 1280px;
@@ -67,8 +102,9 @@ ol {
    Navigation Bar
    ========================= */
 .navContainer {
-  background: #0f172a;
-  border-bottom: 1px solid #1e293b;
+  background: var(--bg-header-footer);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease;
 }
 
 nav {
@@ -89,7 +125,7 @@ nav {
 #companyName {
   font-size: 1.7rem;
   font-weight: 600;
-  color: #cbd5e1;
+  color: var(--text-main);
 }
 
 .rightNav ul {
@@ -99,35 +135,36 @@ nav {
 }
 
 .rightNav a {
-  color: #cbd5e1;
+  color: var(--text-muted);
   font-weight: 500;
   transition: all 0.2s ease;
 }
 
 .rightNav a:hover {
-  color: #38bdf8;
+  color: var(--accent);
 }
 
 /* =========================
    Hero Section
    ========================= */
 .hero {
-  background-color: #0f172a;
+  background-color: var(--bg-header-footer);
   padding: 80px 24px;
   text-align: center;
   margin-bottom: 12px;
+  transition: background-color 0.3s ease;
 }
 
 .hero h1 {
   font-family: "Playfair Display", serif;
   font-size: 3rem;
-  color: #f8fafc;
+  color: var(--text-main);
   margin-bottom: 16px;
 }
 
 .hero p {
   font-size: 1.1rem;
-  color: #94a3b8;
+  color: var(--text-muted);
   letter-spacing: 0.04em;
 }
 
@@ -139,15 +176,16 @@ nav {
   justify-content: center;
   align-items: center;
   gap: 40px;
-  background-color: #ffffff;
+  background-color: var(--bg-card);
   border-radius: 16px;
   padding: 32px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
-  transition: box-shadow 0.2s ease;
+  box-shadow: 0 2px 12px var(--shadow-base);
+  transition: box-shadow 0.2s ease, background-color 0.3s ease;
+  overflow: hidden;
 }
 
 .item:hover {
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 24px var(--shadow-hover);
 }
 
 .left {
@@ -159,9 +197,11 @@ nav {
 
 .right {
   flex: 1;
-  height: 280px;
+  aspect-ratio: 4 / 3; /* Fixed: Fluid proportions instead of fixed height */
   border-radius: 12px;
   overflow: hidden;
+  position: relative;
+  cursor: pointer;
 }
 
 .right img {
@@ -169,11 +209,42 @@ nav {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.3s ease;
+  transition: transform 0.5s ease-in-out;
 }
 
-.item .right img:hover {
+/* Accessibility Fix: Added :focus-within for keyboard navigation */
+.right:hover img,
+.right:focus-within img {
   transform: scale(1.05);
+}
+
+.right:hover .overlay,
+.right:focus-within .overlay {
+  opacity: 1;
+}
+
+.right:hover .overlay span,
+.right:focus-within .overlay span {
+  transform: translateY(-10px);
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--overlay-bg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlay span {
+  color: #ffffff; /* Always white so it pops against the dark overlay */
+  transition: all 0.3s ease;
 }
 
 /* =========================
@@ -181,8 +252,9 @@ nav {
    ========================= */
 footer {
   width: 100%;
-  background-color: #0f172a;
-  border: 1px solid #1e293b;
+  background-color: var(--bg-header-footer);
+  border-top: 1px solid var(--border-color);
+  transition: background-color 0.3s ease;
 }
 
 .footerBox {
@@ -193,7 +265,7 @@ footer {
 }
 
 .footerBox p {
-  color: #94a3b8;
+  color: var(--text-muted);
   font-size: 0.9rem;
   font-weight: 500;
   letter-spacing: 0.01em;
@@ -217,8 +289,9 @@ footer {
     gap: 30px;
   }
 
-  nav ul {
+  .rightNav ul {
     text-align: center;
+    gap: 15px;
   }
 
   .left,
